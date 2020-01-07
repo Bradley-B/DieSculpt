@@ -24,17 +24,19 @@ def run():
 
     gray_image = existing_image.convert(mode='L')
     width, height = gray_image.size
-    output_image = Image.new('L', (width*128, height*128))
+    output_image = Image.new('LA', (width*128, height*128), color=150)
 
     for i in range(1, width - 1):
         for j in range(1, height - 1):
             quantize_image, pixel = quantize(gray_image.getpixel((i, j)))
-            gray_image.putpixel((i, j), pixel)
+            # gray_image.putpixel((i, j), pixel)
             output_image.paste(quantize_image, box=(i*128, j*128))
+            # print("pasting image at", i*128, j*128, quantize_image.filename)
 
     #gray_image.rotate(90)
-    #gray_image.show()
+    # gray_image.show()
     #output_image.show()
+    output_image = output_image.resize((8192, 10912))
     output_image.save("output.png")
     #new_image.save("output.png")
 
